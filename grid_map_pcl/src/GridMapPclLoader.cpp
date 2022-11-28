@@ -35,7 +35,11 @@ GridMapPclLoader::GridMapPclLoader(const rclcpp::Logger & node_logger)
   params_ = std::make_unique<grid_map_pcl::PclLoaderParameters>(node_logger_);
 }
 
-GridMapPclLoader::~GridMapPclLoader() = default;
+// GridMapPclLoader::~GridMapPclLoader() = default;
+GridMapPclLoader::~GridMapPclLoader()
+{
+  RCLCPP_INFO_STREAM(node_logger_, "elevation_map_loader: GridMapPclLoader() is destructed");
+}
 
 const grid_map::GridMap & GridMapPclLoader::getGridMap() const
 {
@@ -51,17 +55,17 @@ void GridMapPclLoader::loadCloudFromPcdFile(const std::string & filename)
 
 void GridMapPclLoader::setInputCloud(Pointcloud::ConstPtr inputCloud)
 {
-  setRawInputCloud(inputCloud);
+  // setRawInputCloud(inputCloud);
   setWorkingCloud(inputCloud);
 }
 
-void GridMapPclLoader::setRawInputCloud(Pointcloud::ConstPtr rawInputCloud)
-{
-  rawInputCloud_.reset();
-  Pointcloud::Ptr temp(new Pointcloud());
-  pcl::copyPointCloud(*rawInputCloud, *temp);
-  rawInputCloud_ = temp;
-}
+// void GridMapPclLoader::setRawInputCloud(Pointcloud::ConstPtr rawInputCloud)
+// {
+//   rawInputCloud_.reset();
+//   Pointcloud::Ptr temp(new Pointcloud());
+//   pcl::copyPointCloud(*rawInputCloud, *temp);
+//   rawInputCloud_ = temp;
+// }
 
 void GridMapPclLoader::setWorkingCloud(Pointcloud::ConstPtr workingCloud)
 {
